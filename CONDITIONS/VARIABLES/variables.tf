@@ -16,14 +16,6 @@ variable "instance_type" {
   type        = string
 }
 
-variable "instance" {
-  description = "Instance configuration"
-  type = object({
-    name = string
-    type = string
-  })
-}
-
 # Key pair name for SSH access
 variable "key_name" {
   description = "Key pair name to access EC2 instance"
@@ -63,8 +55,10 @@ variable "egress_protocol" {
   type        = string
 }
 
-# Number of EC2 instances
-variable "instance_count" {
-  description = "Number of EC2 instances to create"
-  type        = number
+variable "instances" {
+  type = map(object({
+    ami  = string
+    type = string
+    enabled  = bool   # <-- add this flag per instance
+  }))
 }
