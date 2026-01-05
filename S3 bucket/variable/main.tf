@@ -10,7 +10,7 @@ resource "aws_s3_bucket" "my_bucket" {
 
 # Enable Versioning (conditional)
 resource "aws_s3_bucket_versioning" "versioning" {
-  count  = var.enable_versioning ? 1 : 0
+  count  = var.enable_versioning ? 1 : 0  # <--- condition
   bucket = aws_s3_bucket.my_bucket.id
 
   versioning_configuration {

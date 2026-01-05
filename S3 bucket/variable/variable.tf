@@ -16,5 +16,4 @@ variable "environment" {
 variable "enable_versioning" {
   description = "Enable S3 versioning"
   type        = bool
-  default     = true
 }
