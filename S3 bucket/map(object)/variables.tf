@@ -1,14 +1,20 @@
-variable "aws_region" {
-  description = "AWS region"
-  type        = string
+variable "region" {
+  type    = string
+  default = "us-east-1"
 }
 
 variable "s3_buckets" {
-  description = "S3 bucket configuration"
+  description = "Map of S3 bucket configurations"
   type = map(object({
-    bucket_name       = string
-    environment       = string
-    enable_versioning = bool
-    block_public      = bool
+    bucket_name = string
+    environment = string
+    versioning  = bool
+    acl         = string
+     block_public = object({
+      block_public_acls       = bool
+      block_public_policy     = bool
+      ignore_public_acls      = bool
+      restrict_public_buckets = bool
+    })
   }))
 }

@@ -1,17 +1,27 @@
-aws_region = "us-east-1"
-  
-  s3_buckets = {
-  logs = {
-    bucket_name       = "nimra-logs-bucket-2026"
-    environment       = "prod"
-    enable_versioning = true
-    block_public      = true
+s3_buckets = {
+  dev = {
+    bucket_name = "nimra-dev-bucket-2026"
+    environment = "Dev"
+    versioning  = true
+    acl         = "private"
+    block_public = {
+      block_public_acls       = true
+      block_public_policy     = true
+      ignore_public_acls      = true
+      restrict_public_buckets = true
+    }
   }
 
-  uploads = {
-    bucket_name       = "nimra-uploads-bucket-2026"
-    environment       = "dev"
-    enable_versioning = false
-    block_public      = true
+  prod = {
+    bucket_name = "nimra-prod-bucket-2026"
+    environment = "Prod"
+    versioning  = true
+    acl         = "private"
+    block_public = {
+      block_public_acls       = true
+      block_public_policy     = true
+      ignore_public_acls      = true
+      restrict_public_buckets = true
+    }
   }
 }
