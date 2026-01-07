@@ -1,6 +1,15 @@
-variable "iam_roles" {
-  type = map(object({
-    service             = string
-    managed_policy_arns = list(string)
-  }))
+variable "region" {
+  type    = string
+}
+
+variable "role_name" {
+  type    = string
+}
+
+variable "service_name" {
+  type    = string
+}
+
+variable "policy_arn" {
+  type    = string
 }

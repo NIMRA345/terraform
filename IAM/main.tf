@@ -1,7 +1,10 @@
-resource "aws_iam_role" "aws-iam" {
-  for_each = var.iam_roles
+provider "aws" {
+  region = var.region
+}
 
-  name = each.key
+# IAM Role
+resource "aws_iam_role" "read_role" {
+  name = var.role_name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -9,7 +12,7 @@ resource "aws_iam_role" "aws-iam" {
       {
         Effect = "Allow"
         Principal = {
-          Service = each.value.service
+          Service = var.service_name
         }
         Action = "sts:AssumeRole"
       }
@@ -17,10 +20,14 @@ resource "aws_iam_role" "aws-iam" {
   })
 }
 
-# Attach managed policies
-resource "aws_iam_role_policy_attachment" "this" {
-  for_each = var.iam_roles
+# Attach Read-Only Policy
+resource "aws_iam_role_policy_attachment" "read_policy" {
+  role       = aws_iam_role.read_role.name
+  policy_arn = var.policy_arn
+}
 
-  role       = aws_iam_role.this[each.key].name
-  policy_arn = each.value.managed_policy_arns[0]
+# Instance Profile (needed for EC2)
+resource "aws_iam_instance_profile" "read_profile" {
+  name = "${var.role_name}-profile"
+  role = aws_iam_role.read_role.name
 }
